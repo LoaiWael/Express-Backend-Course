@@ -1,23 +1,19 @@
-const validateAddNew = require("../util/studentValidation");
-
-const students = [
-  { id: 1, name: "loai", age: 21, dep: "cs" },
-  { id: 2, name: "mohamed", age: 19, dep: "cs" },
-  { id: 3, name: "sellem", age: 20, dep: "it" },
-  { id: 4, name: "fares", age: 20, dep: "is" },
-];
+const {
+  validateAddStudent,
+  validateUpdateStudent,
+} = require("../util/studentValidation");
+const Student = require("../models/studentModel");
 
 exports.getAllStudents = (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
-  res.json(students);
+  res.json(Student.getAllStudents);
 };
 
 exports.addNewStudent = (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
-  const valid = validateAddNew(req.body);
+  const valid = validateAddStudent(req.body);
   if (valid) {
-    req.body.id = students.length + 1;
-    students.push(req.body);
+    new Student(req.body);
     res.sendStatus(200);
   } else {
     res.sendStatus(403);
@@ -25,24 +21,22 @@ exports.addNewStudent = (req, res) => {
 };
 
 exports.deleteStudent = (req, res) => {
-  const i = students.findIndex((std) => std.id == req.params.id);
-  students.splice(i, 1);
-  res.sendStatus(200);
+  if (Student.deleteStudent(req.params.id)) res.sendStatus(200);
+  else res.sendStatus(404);
 };
 
 exports.updateStudent = (req, res) => {
-  const i = students.findIndex((val) => val.id == req.params.id);
-  if (i) {
-    students[i] = { ...students[i], ...req.body };
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(404);
-  }
+  const valid = validateUpdateStudent(req.body);
+  if (valid) {
+    if (Student.updateStudent(req.body, req.params.id)) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
+    }
+  } else res.sendStatus(403);
 };
 
 exports.getStudentById = (req, res) => {
-  const { id } = req.params;
-  const std = students.find((val, i, arr) => val.id == id);
-
+  const std = Student.getStudentById(req.params.id);
   std ? res.json(std) : res.status(404).send("Student not found");
 };
