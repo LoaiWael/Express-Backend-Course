@@ -1,13 +1,14 @@
 const express = require("express");
-const studentsController = require("../controllers/studentsController");
+const studentsController = require("../controllers/studentsControllerDb");
 const studentIdValidation = require("../middlewares/studentIdValidation");
+const addStudentValidator = require("../middlewares/addStudentValidation");
 
 const router = express.Router();
 
 router.get("/", studentsController.getAllStudents);
 
 //post students
-router.post("/", studentsController.addNewStudent);
+router.post("/", addStudentValidator, studentsController.addNewStudent);
 
 //id param middleware
 router.param("id", studentIdValidation);
