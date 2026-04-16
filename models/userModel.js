@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (val) => valid.isStrongPassword(val),
+      validator: (val) => valid.isStrongPassword(val, { minSymbols: 0 }),
       message: 'Password is not strong enough.'
     }
   }
