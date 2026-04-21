@@ -1,4 +1,4 @@
-const validator = require('../util/studentValidation');
+const validator = require('../util/userValidation');
 
 module.exports = (req, res, nxt) => {
   const valid = validator(req.body);
@@ -6,6 +6,6 @@ module.exports = (req, res, nxt) => {
     req.valid = true;
     nxt();
   } else {
-    res.status(403).send('Invalid inputs');
+    res.status(400).send(validator.errors[0].message);
   }
 }
