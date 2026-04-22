@@ -14,9 +14,11 @@
     "ajv": "^8.18.0",
     "ajv-errors": "^3.0.0",
     "bcrypt": "^6.0.0",
+    "config": "^4.4.1",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",
     "validator": "^13.15.35"
   }

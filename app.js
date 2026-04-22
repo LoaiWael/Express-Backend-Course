@@ -5,7 +5,8 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const mongoose = require('mongoose');
 const studentsRouter = require("./routes/students");
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/user');
+const authRouter = require('./routes/auth');
 const logging = require("./middlewares/logging");
 
 const app = express();
@@ -22,6 +23,7 @@ mongoose.connect('mongodb://localhost:27017/mahara-tech').then(() => log('Connec
 
 app.use("/api/students", studentsRouter);
 app.use("/api/user", userRouter);
+app.use('/api/auth', authRouter);
 
 const port = process.env.port || 3000;
 
