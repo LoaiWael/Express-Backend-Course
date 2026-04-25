@@ -24,12 +24,17 @@ const userSchema = new mongoose.Schema({
       validator: (val) => valid.isStrongPassword(val, { minSymbols: 0 }),
       message: 'Password is not strong enough.'
     }
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true
   }
 });
 
 userSchema.methods.genAuthToken = function () {
   const token = jwt.sign({
-    userId: this._id
+    userId: this._id,
+    isAdmin: this.isAdmin
   }, config.get('jwtsecret'));
 
   return token
