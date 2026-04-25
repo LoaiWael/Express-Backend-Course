@@ -9,10 +9,8 @@ exports.addNewStudent = async (req, res) => {
   })
 
   std.save().then(() => res.send('Student added successfully!')).catch(err => {
-    err.errors.foreach(err => {
-      console.log(err.message)
-      res.status(400).send('Bad Request, try again later.');
-    })
+    console.log(err)
+    res.status(400).send('Bad Request, try again later.');
   })
 }
 
