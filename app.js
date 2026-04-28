@@ -8,6 +8,7 @@ const studentsRouter = require("./routes/students");
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
+const errorHandler = require('./middlewares/errorHandler')
 const logging = require("./middlewares/logging");
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/students", studentsRouter);
 app.use("/api/user", userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
+app.use(errorHandler)
 
 const port = process.env.port || 3000;
 
