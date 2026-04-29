@@ -23,6 +23,15 @@ app.use(helmet());
 
 mongoose.connect('mongodb://localhost:27017/mahara-tech').then(() => log('Connected to the Database.')).catch(err => log(err))
 
+process.on('uncaughtException', exception => {
+  console.log('Un caught exception')
+  process.exit(1)
+});
+process.on('unhandledRejection', exception => {
+  console.log('Unhandled rejected promise')
+  process.exit(1)
+});
+
 app.use("/api/students", studentsRouter);
 app.use("/api/user", userRouter);
 app.use('/api/auth', authRouter);
